@@ -1,6 +1,6 @@
 # Servidor Reprogramafy
 
- É uma aplicação que permite obter informações sobre músicas, álbuns e artistas. Utizado o consumo de api para tratar os dados e expô-los da melhor forma para o usuário.
+ É uma aplicação que permite obter informações sobre músicas, álbuns e artistas. Usando apis para tratar os dados e expô-los da melhor forma para o usuário.
 
 
 
