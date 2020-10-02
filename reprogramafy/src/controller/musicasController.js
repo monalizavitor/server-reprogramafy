@@ -60,7 +60,7 @@ const listOfMusic = musics.map(music => {
         id: music.id,
         nome: music.name,
         amostra: music.preview_url,
-        nome_album: music.album.name,
+        nome_do_album: music.album.name,
         imagem: music.album.url,
         artista: music.artists.name,
         duracao: music.duration_ms
@@ -97,7 +97,7 @@ const listOfAlbuns = musics.map(item => {
         nome: item.album.name,
         data_de_lancamento: item.album.release_date,
         total_de_musicas: item.album.total_tracks,
-        imagem: item.album.imagem
+        imagem: item.album.url
     }
 
 })
@@ -109,7 +109,7 @@ const getAlbuns = (req, res) => {
     const noRepeat = []
 
     listOfAlbuns.forEach(element => {
-        const isFound = noRepeat.find(item => item.nome_album == element.nome_album)
+        const isFound = noRepeat.find(item => item.nome == element.nome)
         if (!isFound) {
             noRepeat.push(element)
         }
@@ -119,18 +119,28 @@ const getAlbuns = (req, res) => {
 
 }
 
+
 const getAlbumByName = (req, res) => {
     console.log(req.url)
-    const name = req.params.name
-    const findAlbunsByName = listOfAlbuns.filter(item => item.nome == name)
-        if (!findAlbunsByName) {
-            res.status(404).send('Erro. Favor conferir o nome do album buscado.')
-         } else {
-            res.status(200).send(findAlbunsByName)
-            
-        }
-        
+    
+    const name = req.params.nome
 
+    const findAlbum = listOfAlbuns.find(item => item.nome.toLowerCase().split(' ').join('-') == name)
+
+    const listAlbumMusics = newListOfMusics.filter(music => {
+        return music.nome_album.toLowerCase().split(' ').join('-') === name
+    })
+
+    const newAlbumMusic = {
+        id: findAlbum.id,
+        nome: findAlbum.nome,
+        data_do_lancamento: findAlbum.data_de_lancamento,
+        total_de_musicas: findAlbum.total_de_musicas,
+        imagem: findAlbum.imagem,
+        musicas: listAlbumMusics
+    }
+
+    res.status(200).send(newAlbumMusic)
 }
 
 

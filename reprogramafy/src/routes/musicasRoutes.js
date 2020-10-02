@@ -4,17 +4,20 @@ const router = express.Router()
 
 const controller = require('../controller/musicasController')
 
-router.get('/musicas', controller.getMusics)
+const cors = require('cors')
 
-router.get('/musicas/:id', controller.getMusicsById)
 
-router.get('/artistas', controller.getArtists)
+router.get('/musicas', cors(), controller.getMusics)
 
-router.get('/artistas/:id', controller.getArtistById)
+router.get('/musicas/:id', cors(), controller.getMusicsById)
 
-router.get('/albuns', controller.getAlbuns)
+router.get('/artistas', cors(), controller.getArtists)
 
-router.get('/albuns/:name-of-album', controller.getAlbumByName)
+router.get('/artistas/:id', cors(), controller.getArtistById)
+
+router.get('/albuns', cors(), controller.getAlbuns)
+
+router.get('/albuns/:nome', cors(),controller.getAlbumByName)
 
 
 module.exports = router
