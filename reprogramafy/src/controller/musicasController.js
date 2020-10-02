@@ -49,6 +49,8 @@ const getArtists = (req, res) => {
         const isFound = listNoRepeat.find(element => element.id == artist.id)
         if (!isFound) {
             listNoRepeat.push(artist)
+        } else {
+            res.status(404).send
         }
     })
 
@@ -126,6 +128,11 @@ const getAlbumByName = (req, res) => {
     const name = req.params.nome
 
     const findAlbum = listOfAlbuns.find(item => item.nome.toLowerCase().split(' ').join('-') == name)
+    if(findAlbum){
+        console.log(findAlbum)
+    } else {
+        res.status(404).send('Album não encontrado!')
+    }
 
     const listAlbumMusics = newListOfMusics.filter(music => {
         return music.nome_album.toLowerCase().split(' ').join('-') === name
